@@ -1,0 +1,19 @@
+using System;
+
+namespace SmartSchool.WebAPI.V1.Dtos
+{
+    public class ProfessorRegistrarDto
+    {
+         public int Id { get; set; }
+        public int Registro { get; set; }
+        /// <summary>
+        /// Nome � o Primeiro Nome e Sobrenome do Professor.
+        /// </summary>
+        public string Nome { get; set; }
+        public string Sobrenome { get; set; }
+        public string Telefone { get; set; }
+        public DateTime DataIni { get; set; } = DateTime.Now;
+        public DateTime? DataFim { get; set; } = null;
+        public bool Ativo { get; set; } = true;
+    }
+}
