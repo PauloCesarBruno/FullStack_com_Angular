@@ -129,7 +129,7 @@ namespace SmartSchool.WebAPI
                    options.RoutePrefix = "";
                });
 
-            // app.UseAuthorization();
+            //app.UseAuthorization();
 
 
             /*==================================================================================
