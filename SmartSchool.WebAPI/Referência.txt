@@ -9,3 +9,8 @@
  .Existe uma Associação de UM PARA MUITOS entre as Classes (Professor.cs) e (Disciplina.cs),
   ou seja, um Professor pode dar Auloa para Varias Disciplinas, porém uma Disciplina só pode
   ter um Professor.
+================================================================================================
+
+ATENÇÃO: Roda no node 16.14.2
+
+nvm use 16.14.2
