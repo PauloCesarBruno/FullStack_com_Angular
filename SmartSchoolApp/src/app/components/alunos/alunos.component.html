@@ -4,12 +4,7 @@
     <div class="row">
       <div class="mr-auto">
         <app-titulo [titulo]="'Cód. Aluno: ' + alunoSelecionado.id"></app-titulo>
-      </div>
-      <div class="mt-1">
-        <button style="margin-left: 490px; margin-top: -80px;" class="btn btn-sm btn-outline-danger" (click)="voltar()">
-          Fechar
-        </button>
-      </div>
+      </div>      
     </div>
 
     <form [formGroup]="alunoForm">
@@ -81,7 +76,6 @@
       [boundaryLinks]="true"
       [totalItems]="pagination.totalItems"
       [itemsPerPage]="pagination.itemsPerPage"
-      [(ngModel)]="pagination.currentPage"
       (pageChanged)="pageChanged($event)"
 
       previousText="&lsaquo;"
