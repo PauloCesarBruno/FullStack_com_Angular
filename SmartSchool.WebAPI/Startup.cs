@@ -30,7 +30,7 @@ namespace SmartSchool.WebAPI
                 context.UseSqlServer(Configuration.GetConnectionString("Default"))
             );
 
-            // Abaixo Ignora o Loop do Json
+            // Abaixo Ignora o Loop do Json.
                services.AddControllers()
                     .AddNewtonsoftJson(
                         opt => opt.SerializerSettings.ReferenceLoopHandling = 
