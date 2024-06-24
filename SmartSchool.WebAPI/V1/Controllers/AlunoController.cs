@@ -7,7 +7,6 @@ using SmartSchool.WebAPI.Models;
 using System.Threading.Tasks;
 using SmartSchool.WebAPI.Helpers;
 
-
 namespace SmartSchool.WebAPI.V1.Controllers
 {
     /// <summary>
