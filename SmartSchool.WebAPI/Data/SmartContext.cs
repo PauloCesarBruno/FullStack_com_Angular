@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using SmartSchool.WebAPI.Models;
 
 namespace SmartSchool.WebAPI.Data
@@ -8,47 +9,47 @@ namespace SmartSchool.WebAPI.Data
     public class SmartContext : DbContext
     {
         // Passando a um Construtor a Conexão.
-        public SmartContext(DbContextOptions<SmartContext> options) : base(options) {}
-        
+        public SmartContext(DbContextOptions<SmartContext> options) : base(options) { }
+
         public DbSet<Aluno> Alunos { get; set; }
         public DbSet<AlunoCurso> AlunosCursos { get; set; }
         public DbSet<AlunoDisciplina> AlunosDisciplinas { get; set; }
         public DbSet<Curso> Cursos { get; set; }
-        public DbSet<Disciplina> Disciplinas { get; set; }       
-        public DbSet<Professor> Professores { get; set; }  
+        public DbSet<Disciplina> Disciplinas { get; set; }
+        public DbSet<Professor> Professores { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder) 
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             /* ABAIXO: Aviso  que existe uma referencia de Muitos para Muitos entre Aluno e Disciplina
             que é o <AlunoDisciplina>, através do metodo abaixo a ser executado.*/
             builder.Entity<AlunoDisciplina>()
-            .HasKey(AD => new {AD.AlunoId, AD.DisciplinaId});
+            .HasKey(AD => new { AD.AlunoId, AD.DisciplinaId });
 
             /* ABAIXO: Aviso  que existe uma referencia de Muitos para Muitos entre Aluno e Curso
              que é o <AlunoCurso>, através do metodo abaixo a ser executado.*/
             builder.Entity<AlunoCurso>()
-                .HasKey(AC => new {AC.AlunoId, AC.CursoId});
+                .HasKey(AC => new { AC.AlunoId, AC.CursoId });
 
             // ABAIXO --> CARGA INICIAL PARA O BANCO DE DADOS.
             // ==================================================================================================
-             builder.Entity<Professor>()
-                .HasData(new List<Professor>(){
+            builder.Entity<Professor>()
+               .HasData(new List<Professor>(){
                     new Professor(1, 1, "Lauro", "Oliveira"),
                     new Professor(2, 2, "Roberto", "Soares"),
                     new Professor(3, 3, "Ronaldo", "Marconi"),
                     new Professor(4, 4, "Rodrigo", "Carvalho"),
                     new Professor(5, 5, "Alexandre", "Montanha"),
-                });
+               });
 
             builder.Entity<Curso>()
                 .HasData(new List<Curso>{
                     new Curso(1, "Tecnologia da Informação"),
                     new Curso(2, "Sistemas de Informação"),
-                    new Curso(3, "Ciência da Computação")             
+                    new Curso(3, "Ciência da Computação")
                 });
-            
-           builder.Entity<Disciplina>()
-                .HasData(new List<Disciplina>{
+
+            builder.Entity<Disciplina>()
+                 .HasData(new List<Disciplina>{
                     new Disciplina(1, "Matemática", 1, 1),
                     new Disciplina(2, "Matemática", 1, 3),
                     new Disciplina(3, "Física", 2, 3),
@@ -59,8 +60,8 @@ namespace SmartSchool.WebAPI.Data
                     new Disciplina(8, "Programação", 5, 1),
                     new Disciplina(9, "Programação", 5, 2),
                     new Disciplina(10, "Programação", 5, 3)
-                });
-            
+                 });
+
             builder.Entity<Aluno>()
                 .HasData(new List<Aluno>(){
                     new Aluno(1, 1, "Marta", "Kent", "33225555", DateTime.Parse("28/05/2005")),
@@ -72,8 +73,8 @@ namespace SmartSchool.WebAPI.Data
                     new Aluno(7, 7, "Paulo", "José", "9874512", DateTime.Parse("28/05/2005"))
                 });
 
-           builder.Entity<AlunoDisciplina>()
-                .HasData(new List<AlunoDisciplina>() {
+            builder.Entity<AlunoDisciplina>()
+                 .HasData(new List<AlunoDisciplina>() {
                     new AlunoDisciplina() {AlunoId = 1, DisciplinaId = 2 },
                     new AlunoDisciplina() {AlunoId = 1, DisciplinaId = 4 },
                     new AlunoDisciplina() {AlunoId = 1, DisciplinaId = 5 },
@@ -97,7 +98,14 @@ namespace SmartSchool.WebAPI.Data
                     new AlunoDisciplina() {AlunoId = 7, DisciplinaId = 3 },
                     new AlunoDisciplina() {AlunoId = 7, DisciplinaId = 4 },
                     new AlunoDisciplina() {AlunoId = 7, DisciplinaId = 5 }
-                });
+                 });
         }
-    }
+        
+        public void ConfigureServices(IServiceCollection services, string connectionString)
+        {
+            services.AddDbContext<SmartContext>(options =>
+                options.UseSqlServer(connectionString, sqlOptions =>
+                    sqlOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
+        }
+    }    
 }    
