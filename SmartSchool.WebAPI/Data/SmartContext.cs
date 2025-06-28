@@ -101,6 +101,7 @@ namespace SmartSchool.WebAPI.Data
                  });
         }
         
+        
         public void ConfigureServices(IServiceCollection services, string connectionString)
         {
             services.AddDbContext<SmartContext>(options =>
