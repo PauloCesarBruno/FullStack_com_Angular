@@ -3,7 +3,7 @@ namespace SmartSchool.WebAPI.Helpers
     public class PageParams
     {
         public const int MaxPageSize = 50;
-        internal readonly int Registro;
+        public readonly int Registro;
 
         public int PageNumber { get; set; } = 1;
         private int pageSize = 10;
